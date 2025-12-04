@@ -1,0 +1,22 @@
+export const API_BASE_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:5000";
+export const API_URL = `${API_BASE_URL}/api`;
+
+export const PAGINATION = {
+  MAX_VISIBLE_PAGES: 100,
+  DEFAULT_PAGE_SIZE: 8,
+  PAGE_SIZE_OPTIONS: [8, 16, 32, 64],
+};
+
+export const VALIDATION = {
+  PRODUCT: {
+    NAME_MIN_LENGTH: 3,
+    NAME_MAX_LENGTH: 255,
+    DESCRIPTION_MIN_LENGTH: 15,
+    DESCRIPTION_MAX_LENGTH: 2000,
+    SKU_MIN_LENGTH: 3,
+    SKU_MAX_LENGTH: 15,
+    PRICE_MAX: 999999.99,
+    INVENTORY_MAX: 10000,
+  },
+};
