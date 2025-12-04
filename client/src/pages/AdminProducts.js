@@ -35,13 +35,8 @@ const AdminProducts = () => {
     changePageSize,
   } = useProducts(true);
 
-  const {
-    getPageNumbers,
-    hasPreviousPage,
-    hasNextPage,
-    isFirstPage,
-    isLastPage,
-  } = usePagination(page, totalPages);
+  const { pageNumbers, hasPreviousPage, hasNextPage, isFirstPage, isLastPage } =
+    usePagination(page, totalPages);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -159,7 +154,7 @@ const AdminProducts = () => {
                 >
                   <FaAngleLeft />
                 </button>
-                {getPageNumbers().map((pageNum) => (
+                {pageNumbers.map((pageNum) => (
                   <button
                     key={pageNum}
                     className={`btn pagination-btn ${

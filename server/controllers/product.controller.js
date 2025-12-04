@@ -112,6 +112,17 @@ const createProduct = async (req, res) => {
     }
 
     const pool = await getConnection();
+
+    const checkSkuRequest = pool.request();
+    checkSkuRequest.input("sku", sql.NVarChar, sku);
+    const skuCheck = await checkSkuRequest.query(`
+      SELECT Id FROM Products WHERE SKU = @sku
+    `);
+
+    if (skuCheck.recordset.length > 0) {
+      return res.status(400).json({ message: "El SKU ya existe" });
+    }
+
     const request = pool.request();
     request.input("name", sql.NVarChar, name);
     request.input("description", sql.NVarChar(sql.MAX), description || "");
@@ -192,6 +203,19 @@ const updateProduct = async (req, res) => {
       updateFields.push("Price = @price");
     }
     if (sku) {
+      const checkSkuRequest = pool.request();
+      checkSkuRequest.input("sku", sql.NVarChar, sku);
+      checkSkuRequest.input("id", sql.Int, productId);
+      const skuCheck = await checkSkuRequest.query(`
+        SELECT Id FROM Products WHERE SKU = @sku AND Id != @id
+      `);
+
+      if (skuCheck.recordset.length > 0) {
+        return res
+          .status(400)
+          .json({ message: "El SKU ya existe en otro producto" });
+      }
+
       request.input("sku", sql.NVarChar, sku);
       updateFields.push("SKU = @sku");
     }

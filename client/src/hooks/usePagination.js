@@ -6,7 +6,7 @@ export const usePagination = (
   totalPages,
   maxVisible = PAGINATION.MAX_VISIBLE_PAGES
 ) => {
-  const getPageNumbers = useMemo(() => {
+  const pageNumbers = useMemo(() => {
     const pages = [];
 
     if (totalPages <= 0) return pages;
@@ -30,7 +30,7 @@ export const usePagination = (
   const hasNextPage = page < totalPages;
 
   return {
-    getPageNumbers,
+    pageNumbers,
     hasPreviousPage,
     hasNextPage,
     isFirstPage: page === 1,
